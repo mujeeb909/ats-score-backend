@@ -1,0 +1,14 @@
+fastapi
+uvicorn[standard]
+requests
+pdfplumber
+python-multipart
+python-docx
+cachetools
+python-dotenv
+# Optional OCR extras (install only if you need OCR):
+pytesseract
+pdf2image
+Pillow
+# Optional rate limiter
+slowapi
