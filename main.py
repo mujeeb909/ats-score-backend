@@ -12,7 +12,7 @@ load_dotenv()
 app = FastAPI(title="AI Resume Scorer API")
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["http://localhost:3000"],  # frontend URL
+    allow_origins=["https://ats-score-frontend.vercel.app", "http://ats-score.com", "http://localhost:3000"],
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
