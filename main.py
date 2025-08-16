@@ -31,6 +31,7 @@ class ResumeScoreResponse(BaseModel):
     experience_score: float
     overall_score: float
     feedback: str
+    missing_aspects: list[str] 
 
 # --- Utils ---
 def call_gemini(prompt: str) -> str:
@@ -62,9 +63,7 @@ def extract_text_from_pdf(file: UploadFile) -> str:
         raise HTTPException(status_code=400, detail=f"Error reading PDF: {e}")
 
 # --- API ---
-@app.get("/ping")
-def ping():
-    return {"message": "pong"}
+
 
 @app.post("/score", response_model=ResumeScoreResponse)
 def score_resume(request: ResumeRequest):
@@ -95,6 +94,7 @@ def process_resume(resume_text: str) -> ResumeScoreResponse:
     3. Give a score from 1-10 for Experience.
     4. Give an overall score from 1-10.
     5. Provide constructive feedback in 2-3 sentences.
+    6. List 2-4 key aspects missing from the resume in "missing_aspects".
 
     Resume:
     {resume_text}
@@ -105,7 +105,8 @@ def process_resume(resume_text: str) -> ResumeScoreResponse:
       "skills_score": number,
       "experience_score": number,
       "overall_score": number,
-      "feedback": "string"
+      "feedback": "string",
+      "missing_aspects": ["string", "string", "string"]
     }}
     No markdown. No code blocks. No extra text.
     """
